@@ -2006,7 +2006,8 @@ __webpack_require__.r(__webpack_exports__);
       fromWho: '',
       toWhom: '',
       name: '',
-      weight: 0
+      weight: 0,
+      loadsArray: []
     };
   },
   methods: {
@@ -2021,16 +2022,32 @@ __webpack_require__.r(__webpack_exports__);
         name: this.name,
         weight: this.weight
       }).then(function (response) {
-        if (response.data) {
-          _this.loadRoutes();
+        if (response.status == 201) {
+          _this.saveData();
         }
-      })["catch"](function (errors) {});
+      })["catch"](function (errors) {
+        alert('You enterd unknown data');
+      });
+    },
+    saveData: function saveData() {
+      this.loadsArray.unshift({
+        weight: this.weight,
+        name: this.name,
+        route_way: {
+          to: this.toWhom,
+          from: this.fromWho,
+          date: this.date
+        }
+      });
+      this.$emit("getloads", this.loadsArray);
     },
     loadRoutes: function loadRoutes() {
       var _this2 = this;
 
       axios.get('/api/load/').then(function (response) {
         if (response.data) {
+          _this2.loadsArray = response.data;
+
           _this2.$emit("getloads", response.data);
         }
       })["catch"](function (errors) {});
@@ -2138,7 +2155,7 @@ __webpack_require__.r(__webpack_exports__);
         if (status === 'OK') {
           directionsDisplay.setDirections(response);
         } else {
-          alert('Your destination not find');
+          alert('Your destination was not found');
         }
       });
     },
@@ -2153,6 +2170,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     loads: function loads() {
+      console.log(this.loads);
       var mapHolder = this.$el.querySelectorAll('.mapa');
       mapHolder.forEach(function (el) {
         el.classList.remove('show-map-holder');

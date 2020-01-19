@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\StoreLoadRequest;
 use Illuminate\Support\Facades\DB;
 use App\Load;
 use App\Route;
@@ -15,7 +16,7 @@ class LoadController extends Controller
         return $loads;
     }
 
-    public function store(Request $request)
+    public function store(StoreLoadRequest $request)
     {
         $load =  Load::create($request->only('name','weight'));
         $route = $load->routeWay()->create($request->only('from','to','date'));

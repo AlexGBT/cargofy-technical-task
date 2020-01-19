@@ -66,7 +66,7 @@
                     if (status === 'OK') {
                         directionsDisplay.setDirections(response);
                     } else {
-                        alert('Your destination not find');
+                        alert('Your destination was not found');
                     }
                 });
             },
@@ -80,6 +80,8 @@
         },
         watch: {
             loads: function() {
+                console.log(this.loads);
+
                 let mapHolder = this.$el.querySelectorAll('.mapa');
                 mapHolder.forEach(function (el) {
                     el.classList.remove('show-map-holder');

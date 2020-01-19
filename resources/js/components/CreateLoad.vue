@@ -75,13 +75,13 @@
                 toWhom:'',
                 name: '',
                 weight: 0,
-
+                loadsArray: [],
             }
         },
 
         methods: {
             onSubmit() {
-                 $('#addLoadModal').modal('hide');
+                $('#addLoadModal').modal('hide');
                 axios.post('/api/load/store', {
                     date: this.date,
                     from: this.fromWho,
@@ -90,19 +90,33 @@
                     weight: this.weight
                 })
                 .then(response => {
-                    if (response.data) {
-                        this.loadRoutes();
+                    if ( response.status == 201) {
+                        this.saveData()
                     }
                 })
                 .catch(errors => {
+                    alert('You enterd unknown data');
                 });
             },
 
+            saveData() {
+                this.loadsArray.unshift({
+                    weight: this.weight,
+                    name: this.name,
+                    route_way: {
+                        to: this.toWhom,
+                        from: this.fromWho,
+                        date: this.date
+                    }
+                });
+                this.$emit("getloads", this.loadsArray);
+            },
             loadRoutes() {
                 axios.get('/api/load/')
                 .then(response => {
                     if (response.data) {
-                         this.$emit("getloads", response.data);
+                        this.loadsArray = response.data;
+                        this.$emit("getloads", response.data);
                     }
                 })
                 .catch(errors => {
