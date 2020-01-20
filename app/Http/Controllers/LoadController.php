@@ -5,6 +5,7 @@ use App\Http\Requests\StoreLoadRequest;
 use Illuminate\Support\Facades\DB;
 use App\Load;
 use App\Route;
+use App\Http\Resources\LoadResource;
 use Illuminate\Http\Request;
 
 class LoadController extends Controller
@@ -13,14 +14,15 @@ class LoadController extends Controller
     public function load()
     {
         $loads = Load::with('routeWay')->orderBy('id','desc')->get();
-        return $loads;
+        return LoadResource::collection($loads);
+//        return $loads;
     }
 
     public function store(StoreLoadRequest $request)
     {
         $load =  Load::create($request->only('name','weight'));
         $route = $load->routeWay()->create($request->only('from','to','date'));
-        return $route;
+        return new LoadResource($load);
     }
 
     public function truncateData()

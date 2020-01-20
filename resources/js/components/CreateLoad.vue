@@ -64,10 +64,6 @@
 
 <script>
     export default {
-        mounted() {
-             this.loadRoutes();
-        },
-
         data: function () {
             return {
                 date: '',
@@ -75,7 +71,7 @@
                 toWhom:'',
                 name: '',
                 weight: 0,
-                loadsArray: [],
+                lastLoad: {},
             }
         },
 
@@ -91,7 +87,10 @@
                 })
                 .then(response => {
                     if ( response.status == 201) {
-                        this.saveData()
+                        this.saveData();
+                        setTimeout(function () {
+                            document.getElementsByTagName('table')[0].lastChild.lastChild.scrollIntoView({block: "center", behavior: "smooth"});
+                        },100);
                     }
                 })
                 .catch(errors => {
@@ -100,7 +99,7 @@
             },
 
             saveData() {
-                this.loadsArray.unshift({
+                this.lastLoad = {
                     weight: this.weight,
                     name: this.name,
                     route_way: {
@@ -108,20 +107,10 @@
                         from: this.fromWho,
                         date: this.date
                     }
-                });
-                this.$emit("getloads", this.loadsArray);
+                };
+                this.$emit("setlastload", this.lastLoad);
             },
-            loadRoutes() {
-                axios.get('/api/load/')
-                .then(response => {
-                    if (response.data) {
-                        this.loadsArray = response.data;
-                        this.$emit("getloads", response.data);
-                    }
-                })
-                .catch(errors => {
-                });
-            }
+
         }
     }
 </script>

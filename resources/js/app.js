@@ -19,6 +19,7 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+Vue.component('InsertMap', require('./components/InsertMap.vue').default);
 Vue.component('create-load', require('./components/CreateLoad.vue').default);
 Vue.component('table-dynamic', require('./components/TableDynamic.vue').default);
 /**
@@ -30,12 +31,12 @@ Vue.component('table-dynamic', require('./components/TableDynamic.vue').default)
 const app = new Vue({
     el: '#app',
     data:{
-        loads:''
+        load:{},
     },
     methods:{
-        obtainedLoads(loads){
+        obtainedload(load){
             // alert(loads);
-            this.loads = loads;
+            this.load = load;
         },
     }
 });

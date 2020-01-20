@@ -34,7 +34,7 @@
             <button type="button" class="btn btn-secondary px-4 py-0 text-dark" data-toggle="modal" data-target="#addLoadModal">Додати</button>
         </div>
         <div class="row mt-5">
-            <table-dynamic :loads="loads"></table-dynamic>
+            <table-dynamic :load="load"></table-dynamic>
         </div>
     </div>
 
