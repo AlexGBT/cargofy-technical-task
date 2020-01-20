@@ -22,7 +22,6 @@ window.Vue = require('vue');
 Vue.component('InsertMap', require('./components/InsertMap.vue').default);
 Vue.component('create-load', require('./components/CreateLoad.vue').default);
 Vue.component('table-dynamic', require('./components/TableDynamic.vue').default)
-Vue.prototype.$lastLoad = {};
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -32,12 +31,6 @@ Vue.prototype.$lastLoad = {};
 
 const app = new Vue({
     el: '#app',
-    methods:{
-        obtainedload(){
-            // alert(loads);
-            this.load = load;
-        },
-    }
 });
 
 

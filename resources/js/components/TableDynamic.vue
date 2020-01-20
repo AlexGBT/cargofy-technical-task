@@ -15,6 +15,7 @@
                         <insert-map :from="currentRoute.from" :to="currentRoute.to"  ></insert-map>
                     </div>
                  </div>
+                <create-load @getlastload="getlastload"></create-load>
             </tbody>
         </table>
         </div>
@@ -22,10 +23,10 @@
 
 <script>
     export default {
-        // props: ['load'],
         mounted() {
             this.loadRoutes();
         },
+
         data: function () {
             return {
                 loads: [],
@@ -34,16 +35,16 @@
                 lastLoad: this.$lastLoad,
             }
         },
+
         methods: {
             loadRoutes() {
                 axios.get('/api/load/')
-                    .then(response => {
-                        if (response.data) {
-                            console.log(response.data);
-                            this.loads = response.data.data;
-                        }
-                    })
-                    .catch(errors => {
+                .then(response => {
+                    if (response.data) {
+                         this.loads = response.data.data;
+                    }
+                })
+                .catch(errors => {
                 });
             },
 
@@ -52,14 +53,11 @@
                 mapHolder.classList.toggle('show-map-holder');
             },
 
-            loadLastRote() {
-                // this.loads.push(this.$lastLoad);
-            }
+            getlastload(lastLoad) {
+                this.loads.push(lastLoad);
+            },
 
         },
-        watch: {
-
-        }
     }
 
 

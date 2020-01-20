@@ -1996,6 +1996,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2003,8 +2020,7 @@ __webpack_require__.r(__webpack_exports__);
       fromWho: '',
       toWhom: '',
       name: '',
-      weight: 0,
-      lastLoad: {}
+      weight: 0
     };
   },
   methods: {
@@ -2019,7 +2035,7 @@ __webpack_require__.r(__webpack_exports__);
         name: this.name,
         weight: this.weight
       }).then(function (response) {
-        _this.$lastLoad = response.data.data; // this.$emit("setlastload");
+        _this.$emit("getlastload", response.data.data);
 
         setTimeout(function () {
           document.getElementsByTagName('table')[0].lastChild.lastChild.scrollIntoView({
@@ -2169,8 +2185,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  // props: ['load'],
   mounted: function mounted() {
     this.loadRoutes();
   },
@@ -2188,7 +2204,6 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/api/load/').then(function (response) {
         if (response.data) {
-          console.log(response.data);
           _this.loads = response.data.data;
         }
       })["catch"](function (errors) {});
@@ -2197,10 +2212,10 @@ __webpack_require__.r(__webpack_exports__);
       var mapHolder = event.target.parentElement.nextElementSibling;
       mapHolder.classList.toggle('show-map-holder');
     },
-    loadLastRote: function loadLastRote() {// this.loads.push(this.$lastLoad);
+    getlastload: function getlastload(lastLoad) {
+      this.loads.push(lastLoad);
     }
-  },
-  watch: {}
+  }
 });
 
 /***/ }),
@@ -38271,191 +38286,240 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c(
-      "form",
+      "div",
       {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.onSubmit($event)
-          }
+        staticClass: "modal fade",
+        attrs: {
+          id: "addLoadModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "addLoadModal",
+          "aria-hidden": "true"
         }
       },
       [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-8 offset-2" }, [
-            _c("div", { staticClass: "form-group row" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "col-md-2 col-form-label",
-                  attrs: { for: "date" }
-                },
-                [_vm._v("дата")]
-              ),
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(0),
               _vm._v(" "),
-              _c("input", {
-                directives: [
+              _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "form",
                   {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.date,
-                    expression: "date"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { id: "date", type: "date", name: "date", required: "" },
-                domProps: { value: _vm.date },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.onSubmit($event)
+                      }
                     }
-                    _vm.date = $event.target.value
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "col-md-2 col-form-label",
-                  attrs: { for: "from" }
-                },
-                [_vm._v("звідки")]
-              ),
+                  },
+                  [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-8 offset-2" }, [
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-md-2 col-form-label",
+                              attrs: { for: "date" }
+                            },
+                            [_vm._v("дата")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.date,
+                                expression: "date"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              id: "date",
+                              type: "date",
+                              name: "date",
+                              required: ""
+                            },
+                            domProps: { value: _vm.date },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.date = $event.target.value
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-md-2 col-form-label",
+                              attrs: { for: "from" }
+                            },
+                            [_vm._v("звідки")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.fromWho,
+                                expression: "fromWho"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              id: "from",
+                              type: "text",
+                              name: "from",
+                              required: ""
+                            },
+                            domProps: { value: _vm.fromWho },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.fromWho = $event.target.value
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-md-2 col-form-label",
+                              attrs: { for: "to" }
+                            },
+                            [_vm._v("куди")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.toWhom,
+                                expression: "toWhom"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              id: "to",
+                              type: "text",
+                              name: "to",
+                              required: ""
+                            },
+                            domProps: { value: _vm.toWhom },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.toWhom = $event.target.value
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-md-2 col-form-label",
+                              attrs: { for: "name" }
+                            },
+                            [_vm._v("назва")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.name,
+                                expression: "name"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              id: "name",
+                              type: "text",
+                              name: "name",
+                              required: ""
+                            },
+                            domProps: { value: _vm.name },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.name = $event.target.value
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-md-2 col-form-label",
+                              attrs: { for: "weight" }
+                            },
+                            [_vm._v("вага")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.weight,
+                                expression: "weight"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              id: "weight",
+                              type: "number",
+                              name: "weight",
+                              required: ""
+                            },
+                            domProps: { value: _vm.weight },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.weight = $event.target.value
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(1)
+                      ])
+                    ])
+                  ]
+                )
+              ]),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.fromWho,
-                    expression: "fromWho"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { id: "from", type: "text", name: "from", required: "" },
-                domProps: { value: _vm.fromWho },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.fromWho = $event.target.value
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "col-md-2 col-form-label",
-                  attrs: { for: "to" }
-                },
-                [_vm._v("куди")]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.toWhom,
-                    expression: "toWhom"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { id: "to", type: "text", name: "to", required: "" },
-                domProps: { value: _vm.toWhom },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.toWhom = $event.target.value
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "col-md-2 col-form-label",
-                  attrs: { for: "name" }
-                },
-                [_vm._v("назва")]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.name,
-                    expression: "name"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { id: "name", type: "text", name: "name", required: "" },
-                domProps: { value: _vm.name },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.name = $event.target.value
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "col-md-2 col-form-label",
-                  attrs: { for: "weight" }
-                },
-                [_vm._v("вага")]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.weight,
-                    expression: "weight"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  id: "weight",
-                  type: "number",
-                  name: "weight",
-                  required: ""
-                },
-                domProps: { value: _vm.weight },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.weight = $event.target.value
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _vm._m(0)
-          ])
-        ])
+              _vm._m(2)
+            ])
+          ]
+        )
       ]
     )
   ])
@@ -38465,11 +38529,47 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Додати")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "form-group row" }, [
       _c("input", {
         staticClass: "btn btn-primary",
         attrs: { type: "submit", value: "Створити" }
       })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      )
     ])
   }
 ]
@@ -38524,52 +38624,56 @@ var render = function() {
       _vm._v(" "),
       _c(
         "tbody",
-        _vm._l(_vm.loads, function(load) {
-          return _c(
-            "div",
-            _vm._l(load.route_way, function(currentRoute) {
-              return _c(
-                "div",
-                [
-                  _c(
-                    "tr",
-                    {
-                      on: {
-                        click: function($event) {
-                          return _vm.showMap($event)
+        [
+          _vm._l(_vm.loads, function(load) {
+            return _c(
+              "div",
+              _vm._l(load.route_way, function(currentRoute) {
+                return _c(
+                  "div",
+                  [
+                    _c(
+                      "tr",
+                      {
+                        on: {
+                          click: function($event) {
+                            return _vm.showMap($event)
+                          }
                         }
-                      }
-                    },
-                    [
-                      _c("td", [_vm._v(_vm._s(currentRoute.date.slice(5)))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(
-                          _vm._s(currentRoute.from) +
-                            " - " +
-                            _vm._s(currentRoute.to)
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(load.name))]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "td4" }, [
-                        _vm._v(_vm._s(load.weight) + " т")
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("insert-map", {
-                    attrs: { from: currentRoute.from, to: currentRoute.to }
-                  })
-                ],
-                1
-              )
-            }),
-            0
-          )
-        }),
-        0
+                      },
+                      [
+                        _c("td", [_vm._v(_vm._s(currentRoute.date.slice(5)))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            _vm._s(currentRoute.from) +
+                              " - " +
+                              _vm._s(currentRoute.to)
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(load.name))]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "td4" }, [
+                          _vm._v(_vm._s(load.weight) + " т")
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("insert-map", {
+                      attrs: { from: currentRoute.from, to: currentRoute.to }
+                    })
+                  ],
+                  1
+                )
+              }),
+              0
+            )
+          }),
+          _vm._v(" "),
+          _c("create-load", { on: { getlastload: _vm.getlastload } })
+        ],
+        2
       )
     ])
   ])
@@ -50766,7 +50870,6 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 Vue.component('InsertMap', __webpack_require__(/*! ./components/InsertMap.vue */ "./resources/js/components/InsertMap.vue")["default"]);
 Vue.component('create-load', __webpack_require__(/*! ./components/CreateLoad.vue */ "./resources/js/components/CreateLoad.vue")["default"]);
 Vue.component('table-dynamic', __webpack_require__(/*! ./components/TableDynamic.vue */ "./resources/js/components/TableDynamic.vue")["default"]);
-Vue.prototype.$lastLoad = {};
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -50774,13 +50877,7 @@ Vue.prototype.$lastLoad = {};
  */
 
 var app = new Vue({
-  el: '#app',
-  methods: {
-    obtainedload: function obtainedload() {
-      // alert(loads);
-      this.load = load;
-    }
-  }
+  el: '#app'
 });
 
 /***/ }),
