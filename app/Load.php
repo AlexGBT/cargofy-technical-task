@@ -9,8 +9,8 @@ class Load extends Model
     public $guarded = [];
     public $timestamps = false;
 
-    public function routeWay()
+    public function routeWays()
     {
-        return $this->hasOne(Route::class);
+        return $this->hasMany(Route::class);
     }
 }

@@ -24,7 +24,7 @@
 
             insertMap() {
                 this.buildRoute( this.from, this.to );
-                this.title.removeEventListener( 'click' , this.insertMap);
+                this.title.removeEventListener( 'click' , this.insertMap );
             },
 
             buildRoute: function ( from, to ) {

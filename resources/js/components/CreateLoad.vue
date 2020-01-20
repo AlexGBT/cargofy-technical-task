@@ -86,31 +86,16 @@
                     weight: this.weight
                 })
                 .then(response => {
-                    if ( response.status == 201) {
-                        this.saveData();
-                        setTimeout(function () {
-                            document.getElementsByTagName('table')[0].lastChild.lastChild.scrollIntoView({block: "center", behavior: "smooth"});
-                        },100);
-                    }
-                })
+                    this.$lastLoad = response.data.data;
+                    // this.$emit("setlastload");
+                    setTimeout(function () {
+                        document.getElementsByTagName('table')[0].lastChild.lastChild.scrollIntoView({block: "center", behavior: "smooth"});
+                    },100);
+                 })
                 .catch(errors => {
                     alert('You enterd unknown data');
                 });
             },
-
-            saveData() {
-                this.lastLoad = {
-                    weight: this.weight,
-                    name: this.name,
-                    route_way: {
-                        to: this.toWhom,
-                        from: this.fromWho,
-                        date: this.date
-                    }
-                };
-                this.$emit("setlastload", this.lastLoad);
-            },
-
         }
     }
 </script>

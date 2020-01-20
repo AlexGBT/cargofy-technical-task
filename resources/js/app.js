@@ -21,7 +21,9 @@ window.Vue = require('vue');
 
 Vue.component('InsertMap', require('./components/InsertMap.vue').default);
 Vue.component('create-load', require('./components/CreateLoad.vue').default);
-Vue.component('table-dynamic', require('./components/TableDynamic.vue').default);
+Vue.component('table-dynamic', require('./components/TableDynamic.vue').default)
+Vue.prototype.$lastLoad = {};
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -30,15 +32,14 @@ Vue.component('table-dynamic', require('./components/TableDynamic.vue').default)
 
 const app = new Vue({
     el: '#app',
-    data:{
-        load:{},
-    },
     methods:{
-        obtainedload(load){
+        obtainedload(){
             // alert(loads);
             this.load = load;
         },
     }
 });
+
+
 
 

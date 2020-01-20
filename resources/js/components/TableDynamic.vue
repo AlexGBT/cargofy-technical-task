@@ -5,13 +5,15 @@
                 </thead>
             <tbody>
                 <div v-for="load in loads">
-                    <tr @click="showMap($event)">
-                        <td>{{load.route_way.date.slice(5)}}</td>
-                        <td>{{load.route_way.from}} - {{load.route_way.to}}</td>
-                        <td>{{load.name}}</td>
-                        <td class="td4">{{load.weight}} т</td>
-                     </tr>
-                    <insert-map :from="load.route_way.from" :to="load.route_way.to" ></insert-map>
+                    <div v-for="currentRoute in load.route_way">
+                        <tr @click="showMap($event)" >
+                            <td>{{currentRoute.date.slice(5)}}</td>
+                            <td>{{currentRoute.from}} - {{currentRoute.to}}</td>
+                            <td>{{load.name}}</td>
+                            <td class="td4">{{load.weight}} т</td>
+                        </tr>
+                        <insert-map :from="currentRoute.from" :to="currentRoute.to"  ></insert-map>
+                    </div>
                  </div>
             </tbody>
         </table>
@@ -20,7 +22,7 @@
 
 <script>
     export default {
-        props: ['load'],
+        // props: ['load'],
         mounted() {
             this.loadRoutes();
         },
@@ -29,6 +31,7 @@
                 loads: [],
                 isMapCreated: false,
                 map: '',
+                lastLoad: this.$lastLoad,
             }
         },
         methods: {
@@ -36,7 +39,8 @@
                 axios.get('/api/load/')
                     .then(response => {
                         if (response.data) {
-                             this.loads = response.data.data;
+                            console.log(response.data);
+                            this.loads = response.data.data;
                         }
                     })
                     .catch(errors => {
@@ -46,14 +50,15 @@
             showMap( event ) {
                 let mapHolder = event.target.parentElement.nextElementSibling;
                 mapHolder.classList.toggle('show-map-holder');
+            },
+
+            loadLastRote() {
+                // this.loads.push(this.$lastLoad);
             }
+
         },
         watch: {
-            load: function() {
-                this.load.id = this.loads.length;
-                this.load.route_way.id = this.loads.length;
-                this.loads.push(this.load);
-            },
+
         }
     }
 

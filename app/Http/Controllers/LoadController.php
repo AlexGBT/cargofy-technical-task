@@ -13,7 +13,7 @@ class LoadController extends Controller
 
     public function load()
     {
-        $loads = Load::with('routeWay')->orderBy('id','desc')->get();
+        $loads = Load::with('routeWays')->orderBy('id','desc')->get();
         return LoadResource::collection($loads);
 //        return $loads;
     }
@@ -21,7 +21,7 @@ class LoadController extends Controller
     public function store(StoreLoadRequest $request)
     {
         $load =  Load::create($request->only('name','weight'));
-        $route = $load->routeWay()->create($request->only('from','to','date'));
+        $route = $load->routeWays()->create($request->only('from','to','date'));
         return new LoadResource($load);
     }
 
@@ -35,7 +35,7 @@ class LoadController extends Controller
         factory(Load::class, 20)
             ->create()
             ->each(function ($load) {
-                $load->routeWay()->save(factory(Route::class)->make());
+                $load->routeWays()->save(factory(Route::class)->make());
             });
         return view('main');
     }

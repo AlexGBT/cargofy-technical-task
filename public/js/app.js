@@ -2019,31 +2019,17 @@ __webpack_require__.r(__webpack_exports__);
         name: this.name,
         weight: this.weight
       }).then(function (response) {
-        if (response.status == 201) {
-          _this.saveData();
+        _this.$lastLoad = response.data.data; // this.$emit("setlastload");
 
-          setTimeout(function () {
-            document.getElementsByTagName('table')[0].lastChild.lastChild.scrollIntoView({
-              block: "center",
-              behavior: "smooth"
-            });
-          }, 100);
-        }
+        setTimeout(function () {
+          document.getElementsByTagName('table')[0].lastChild.lastChild.scrollIntoView({
+            block: "center",
+            behavior: "smooth"
+          });
+        }, 100);
       })["catch"](function (errors) {
         alert('You enterd unknown data');
       });
-    },
-    saveData: function saveData() {
-      this.lastLoad = {
-        weight: this.weight,
-        name: this.name,
-        route_way: {
-          to: this.toWhom,
-          from: this.fromWho,
-          date: this.date
-        }
-      };
-      this.$emit("setlastload", this.lastLoad);
     }
   }
 });
@@ -2181,8 +2167,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['load'],
+  // props: ['load'],
   mounted: function mounted() {
     this.loadRoutes();
   },
@@ -2190,7 +2178,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       loads: [],
       isMapCreated: false,
-      map: ''
+      map: '',
+      lastLoad: this.$lastLoad
     };
   },
   methods: {
@@ -2199,6 +2188,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/api/load/').then(function (response) {
         if (response.data) {
+          console.log(response.data);
           _this.loads = response.data.data;
         }
       })["catch"](function (errors) {});
@@ -2206,15 +2196,11 @@ __webpack_require__.r(__webpack_exports__);
     showMap: function showMap(event) {
       var mapHolder = event.target.parentElement.nextElementSibling;
       mapHolder.classList.toggle('show-map-holder');
+    },
+    loadLastRote: function loadLastRote() {// this.loads.push(this.$lastLoad);
     }
   },
-  watch: {
-    load: function load() {
-      this.load.id = this.loads.length;
-      this.load.route_way.id = this.loads.length;
-      this.loads.push(this.load);
-    }
-  }
+  watch: {}
 });
 
 /***/ }),
@@ -38541,40 +38527,46 @@ var render = function() {
         _vm._l(_vm.loads, function(load) {
           return _c(
             "div",
-            [
-              _c(
-                "tr",
-                {
-                  on: {
-                    click: function($event) {
-                      return _vm.showMap($event)
-                    }
-                  }
-                },
+            _vm._l(load.route_way, function(currentRoute) {
+              return _c(
+                "div",
                 [
-                  _c("td", [_vm._v(_vm._s(load.route_way.date.slice(5)))]),
+                  _c(
+                    "tr",
+                    {
+                      on: {
+                        click: function($event) {
+                          return _vm.showMap($event)
+                        }
+                      }
+                    },
+                    [
+                      _c("td", [_vm._v(_vm._s(currentRoute.date.slice(5)))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          _vm._s(currentRoute.from) +
+                            " - " +
+                            _vm._s(currentRoute.to)
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(load.name))]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "td4" }, [
+                        _vm._v(_vm._s(load.weight) + " т")
+                      ])
+                    ]
+                  ),
                   _vm._v(" "),
-                  _c("td", [
-                    _vm._v(
-                      _vm._s(load.route_way.from) +
-                        " - " +
-                        _vm._s(load.route_way.to)
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(load.name))]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "td4" }, [
-                    _vm._v(_vm._s(load.weight) + " т")
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("insert-map", {
-                attrs: { from: load.route_way.from, to: load.route_way.to }
-              })
-            ],
-            1
+                  _c("insert-map", {
+                    attrs: { from: currentRoute.from, to: currentRoute.to }
+                  })
+                ],
+                1
+              )
+            }),
+            0
           )
         }),
         0
@@ -50774,6 +50766,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 Vue.component('InsertMap', __webpack_require__(/*! ./components/InsertMap.vue */ "./resources/js/components/InsertMap.vue")["default"]);
 Vue.component('create-load', __webpack_require__(/*! ./components/CreateLoad.vue */ "./resources/js/components/CreateLoad.vue")["default"]);
 Vue.component('table-dynamic', __webpack_require__(/*! ./components/TableDynamic.vue */ "./resources/js/components/TableDynamic.vue")["default"]);
+Vue.prototype.$lastLoad = {};
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -50782,11 +50775,8 @@ Vue.component('table-dynamic', __webpack_require__(/*! ./components/TableDynamic
 
 var app = new Vue({
   el: '#app',
-  data: {
-    load: {}
-  },
   methods: {
-    obtainedload: function obtainedload(load) {
+    obtainedload: function obtainedload() {
       // alert(loads);
       this.load = load;
     }

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LoadResource extends JsonResource
+class RouteResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +16,9 @@ class LoadResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'weight' => $this->weight,
-            'route_way' => RouteResource::collection($this->routeWays),
+            'from' => $this->from,
+            'to' => $this->to,
+            'date' => $this->date
         ];
     }
 }
