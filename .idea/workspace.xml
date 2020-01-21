@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f0659ce5-2461-4b86-a10b-c4ddf5b6a5ca" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore_global" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore_global" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/TableDynamic.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/TableDynamic.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -169,7 +168,7 @@
       <workItem from="1579425680886" duration="11617000" />
       <workItem from="1579453273855" duration="14316000" />
       <workItem from="1579501705518" duration="27885000" />
-      <workItem from="1579587700921" duration="582000" />
+      <workItem from="1579587700921" duration="1259000" />
     </task>
     <servers />
   </component>
