@@ -12,7 +12,7 @@
                             <td>{{load.name}}</td>
                             <td class="td4">{{load.weight}} т</td>
                         </tr>
-                        <insert-map :from="currentRoute.from" :to="currentRoute.to"  ></insert-map>
+                        <insert-map :from="currentRoute.from" :to="currentRoute.to"></insert-map>
                     </div>
                  </div>
                 <create-load @getlastload="getlastload"></create-load>
@@ -30,9 +30,9 @@
         data: function () {
             return {
                 loads: [],
-                isMapCreated: false,
-                map: '',
-                lastLoad: this.$lastLoad,
+                isMapCreated: false,     // удалить !!!!
+                map: '',                  // удалить !!!!
+                lastLoad: this.$lastLoad, // удалить !!!!
             }
         },
 

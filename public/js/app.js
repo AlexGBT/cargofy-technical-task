@@ -2194,8 +2194,11 @@ __webpack_require__.r(__webpack_exports__);
     return {
       loads: [],
       isMapCreated: false,
+      // удалить !!!!
       map: '',
-      lastLoad: this.$lastLoad
+      // удалить !!!!
+      lastLoad: this.$lastLoad // удалить !!!!
+
     };
   },
   methods: {
