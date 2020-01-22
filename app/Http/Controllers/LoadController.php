@@ -1,43 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\StoreLoadRequest;
-use Illuminate\Support\Facades\DB;
-use App\Load;
-use App\Route;
-use App\Http\Resources\LoadResource;
-use Illuminate\Http\Request;
 
-class LoadController extends Controller
+class LoadController
 {
-
-    public function load()
+    public function index()
     {
-        $loads = Load::with('routeWays')->orderBy('id','desc')->get();
-        return LoadResource::collection($loads);
-//        return $loads;
-    }
-
-    public function store(StoreLoadRequest $request)
-    {
-        $load =  Load::create($request->only('name','weight'));
-        $route = $load->routeWays()->create($request->only('from','to','date'));
-        return new LoadResource($load);
-    }
-
-    public function truncateData()
-    {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('loads')->truncate();
-        DB::table('routes')->truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
-        factory(Load::class, 20)
-            ->create()
-            ->each(function ($load) {
-                $load->routeWays()->save(factory(Route::class)->make());
-            });
         return view('main');
     }
-
 }

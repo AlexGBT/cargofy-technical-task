@@ -18,7 +18,7 @@ class LoadResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'weight' => $this->weight,
-            'route_way' => RouteResource::collection($this->routeWays),
+            'route_ways' => RouteResource::collection($this->routeWays),
         ];
     }
 }

@@ -12,6 +12,6 @@
 */
 
 
-Route::get('/', 'LoadController@truncateData');
+Route::get('/', 'LoadController@index');
 
 

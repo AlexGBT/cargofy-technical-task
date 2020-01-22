@@ -11,10 +11,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-            factory(App\Load::class, 20)
-            ->create()
-            ->each(function ($load) {
-                $load->routeWay()->save(factory(App\Route::class)->make());
-            });
+        factory(App\Load::class, 20)->create();
     }
 }

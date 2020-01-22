@@ -15,8 +15,7 @@ class CreateRoutesTable extends Migration
     {
         Schema::create('routes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('from');
-            $table->string('to');
+            $table->string('address');
             $table->date('date');
             $table->unsignedBigInteger('load_id');
             $table->foreign('load_id')->references('id')->on('loads')->onDelete('cascade');

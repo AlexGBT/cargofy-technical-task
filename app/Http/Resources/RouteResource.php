@@ -16,8 +16,7 @@ class RouteResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'from' => $this->from,
-            'to' => $this->to,
+            'address' => $this->address,
             'date' => $this->date
         ];
     }

@@ -6,15 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreLoadRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -26,9 +17,6 @@ class StoreLoadRequest extends FormRequest
         return [
             'weight' => 'required|max:255|numeric',
             'name' => 'required|max:255',
-            'from' => 'required|max:255',
-            'to' => 'required|max:255',
-            'date' => 'required|date',
         ];
     }
 }
